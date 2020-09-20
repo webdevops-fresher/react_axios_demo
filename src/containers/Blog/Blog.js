@@ -7,7 +7,7 @@ import Home from "../../components/Home/Home";
 import "./Blog.css";
 
 import axios from "axios";
-import { Route, Link, NavLink, withRouter, Switch } from "react-router-dom";
+import { Route, Link, NavLink, withRouter, Switch,Redirect } from "react-router-dom";
 
 class Blog extends Component {
   render() {
@@ -45,6 +45,8 @@ class Blog extends Component {
           <Route path="/" exact component={Home} />
           <Route path="/new-post" exact component={NewPost} />
           <Route path="/posts"  component={Posts} />
+          {/* <Redirect from="/" to="/" /> one way to handle unknown routes*/}
+          <Route render={()=><h1>PAGE NOT FOUND</h1>} />
         </Switch>
       </div>
     );

@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 
 import './NewPost.css';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 
 class NewPost extends React.PureComponent {
     state = {
         title: '',
         content: '',
-        author: 'Max'
+        author: 'Max',
+        submitted:false
     }
 
     postDataHandler=()=>{
@@ -18,13 +20,18 @@ class NewPost extends React.PureComponent {
         }
         axios.post('/',data)
         .then(response=>{
+            this.setState({submitted:true})
         })
     }
 
     render () {
-        console.log('>>routing props',this.props);
+        let redirect=null;
+        if(this.state.submitted){
+            redirect=<Redirect to="/posts" />
+        }
         return (
             <div className="NewPost">
+                {redirect}
                 <h1>Add a Post</h1>
                 <label>Title</label>
                 <input type="text" value={this.state.title} onChange={(event) => this.setState({title: event.target.value})} />
