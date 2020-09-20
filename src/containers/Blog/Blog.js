@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 import Posts from "../Blog/Posts/Posts";
-import NewPost from "../Blog/NewPost/NewPost";
-import FullPost from "./FullPost/FullPost";
+// import NewPost from "../Blog/NewPost/NewPost";
 import Home from "../../components/Home/Home";
+import asyncComponent from '../../hoc/asyncComponent';
 
 import "./Blog.css";
 
 import axios from "axios";
 import { Route, Link, NavLink, withRouter, Switch,Redirect } from "react-router-dom";
 
+const AsyncNewPost=asyncComponent(()=>import('../Blog/NewPost/NewPost'));
 class Blog extends Component {
   render() {
     return (
@@ -43,7 +44,7 @@ class Blog extends Component {
         {/* <Posts/> */}
         <Switch>   
           <Route path="/" exact component={Home} />
-          <Route path="/new-post" exact component={NewPost} />
+          <Route path="/new-post"  component={AsyncNewPost} />
           <Route path="/posts"  component={Posts} />
           {/* <Redirect from="/" to="/" /> one way to handle unknown routes*/}
           <Route render={()=><h1>PAGE NOT FOUND</h1>} />
