@@ -29,18 +29,17 @@ class Posts extends React.PureComponent{
 
     
       postClicked=(id)=>{
-          this.props.history.push('/'+id);
+          this.props.history.push(this.props.match.url+'/'+id);
       }
     render(){
         const posts = this.state.posts.map((post) => {
             return (
-            <Link to={`/posts/${post.id}`}><Post
+            <Post
               title={post.title}
               author={post.author}
               key={post.id}
               postClicked={()=>this.postClicked(post.id)}
             />
-            </Link>
           )});
         return (
             <section className="Posts">
