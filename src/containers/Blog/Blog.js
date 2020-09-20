@@ -1,60 +1,37 @@
 import React, { Component } from "react";
+import Posts from '../Blog/Posts/Posts';
+import NewPost from '../Blog/NewPost/NewPost';
+import FullPost from './FullPost/FullPost';
+import Home from '../../components/Home/Home';
 
-import Post from "../../components/Post/Post";
-import FullPost from "../../components/FullPost/FullPost";
-import NewPost from "../../components/NewPost/NewPost";
 import "./Blog.css";
 
 import axios from "axios";
+import {Route,Link, NavLink,withRouter} from 'react-router-dom';
 
 class Blog extends Component {
-  state = {
-    posts: [],
-    selectedPostId:null,
-    error:false
-  };
 
-  componentDidMount() {
-    axios.get("/").then((response) => {
-      let posts = [...response.data].slice(0, 5);
-      posts = posts.map((post) => {
-        return { ...post, author: "vignesh" };
-      });
-      this.setState({ posts: [...posts] });
-    })
-    .catch(err=>{
-        if(err){
-            this.setState({error:true});
-        }
-    });
-  }
-
-  postClicked=(id)=>{
-      this.setState({selectedPostId:id});
-  }
 
   render() {
-    const posts = this.state.posts.map((post) => (
-      <Post
-        title={post.title}
-        author={post.author}
-        key={post.id}
-        postClicked={()=>this.postClicked(post.id)}
-      />
-    ));
 
     return (
-      <div>
-        <section className="Posts">{!this.state.error?posts:<span>Error fetching data from server</span>}</section>
-        <section>
-          <FullPost selectedPostId={this.state.selectedPostId}/>
-        </section>
-        <section>
-          <NewPost />
-        </section>
+      <div className="Blog">
+        <header>
+          <nav>
+            <ul>
+              <li><NavLink to="/" exact>Home</NavLink></li>
+              <li><NavLink to="/posts" exact>posts</NavLink></li>
+              <li><NavLink to={{pathname:'/new-post',hash:'#submit',search:'?quick-submit=true'}}>New Post</NavLink></li>
+            </ul>
+          </nav>
+        </header>
+        {/* <Posts/> */}
+        <Route path="/" exact component={Home} />
+        <Route path="/posts" exact component={Posts} />
+        <Route path="/new-post" exact component={NewPost} />
       </div>
     );
   }
 }
 
-export default Blog;
+export default withRouter(Blog);

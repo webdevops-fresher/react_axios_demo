@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import './NewPost.css';
 import axios from 'axios';
 
-class NewPost extends Component {
+class NewPost extends React.PureComponent {
     state = {
         title: '',
         content: '',
@@ -22,6 +22,7 @@ class NewPost extends Component {
     }
 
     render () {
+        console.log('>>routing props',this.props);
         return (
             <div className="NewPost">
                 <h1>Add a Post</h1>
@@ -35,6 +36,7 @@ class NewPost extends Component {
                     <option value="Manu">Manu</option>
                 </select>
                 <button onClick={this.postDataHandler}>Add Post</button>
+                <button onClick={()=>this.props.history.goBack()}>Go Back</button>
             </div>
         );
     }
