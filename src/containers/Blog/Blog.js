@@ -10,6 +10,7 @@ import axios from "axios";
 import { Route, Link, NavLink, withRouter, Switch,Redirect } from "react-router-dom";
 
 const AsyncNewPost=asyncComponent(()=>import('../Blog/NewPost/NewPost'));
+const AsyncPosts=asyncComponent(()=>import('../Blog/Posts/Posts'));
 class Blog extends Component {
   render() {
     return (
@@ -45,7 +46,7 @@ class Blog extends Component {
         <Switch>   
           <Route path="/" exact component={Home} />
           <Route path="/new-post"  component={AsyncNewPost} />
-          <Route path="/posts"  component={Posts} />
+          <Route path="/posts"  component={AsyncPosts} />
           {/* <Redirect from="/" to="/" /> one way to handle unknown routes*/}
           <Route render={()=><h1>PAGE NOT FOUND</h1>} />
         </Switch>
